@@ -7,35 +7,36 @@ import jakarta.persistence.*;
 public class ThemeSetting {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id = 1L;
 
-    @Column(name = "theme_name")
-    private String themeName;
+    @Column(nullable = false)
+    private String primaryColor = "#2563EB";
 
-    @Column(name = "is_active")
-    private Boolean isActive;
+    @Column(nullable = false)
+    private String backgroundColor = "#F8FAFC";
 
-    public Long getId() {
-        return id;
-    }
-    public void setId(Long id) {
-        this.id = id;
-    }
+    @Column(nullable = false)
+    private String fontFamily = "'Segoe UI', sans-serif";
 
-    public String getThemeName() {
-        return themeName;
-    }
+    @Column(nullable = false)
+    private String textColor = "#1E293B";
 
-    public void setThemeName(String themeName) {
-        this.themeName = themeName;
-    }
+    // CONSTRUCTORS
+    public ThemeSetting() {}
 
-    public Boolean getIsActive() {
-        return isActive;
-    }
+    // GETTERS & SETTERS
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public void setIsActive(Boolean isActive) {
-        this.isActive = isActive;
-    }
+    public String getPrimaryColor() { return primaryColor; }
+    public void setPrimaryColor(String primaryColor) { this.primaryColor = primaryColor; }
+
+    public String getBackgroundColor() { return backgroundColor; }
+    public void setBackgroundColor(String backgroundColor) { this.backgroundColor = backgroundColor; }
+
+    public String getFontFamily() { return fontFamily; }
+    public void setFontFamily(String fontFamily) { this.fontFamily = fontFamily; }
+
+    public String getTextColor() { return textColor; }
+    public void setTextColor(String textColor) { this.textColor = textColor; }
 }
