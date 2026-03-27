@@ -12,10 +12,10 @@
     -->
     <style th:inline="text">
         :root {
-            --primary:    [[${theme.primaryColor}]];
-            --bg:         [[${theme.backgroundColor}]];
-            --text:       [[${theme.textColor}]];
-            --font:       [[${theme.fontFamily}]];
+            --primary:  /*[[${theme != null ? theme.primaryColor    : '#2563EB'}]]*/  #2563EB;
+            --bg:       /*[[${theme != null ? theme.backgroundColor : '#F8FAFC'}]]*/  #F8FAFC;
+            --text:     /*[[${theme != null ? theme.textColor       : '#1E293B'}]]*/  #1E293B;
+            --font:     /*[[${theme != null ? theme.fontFamily      : 'Segoe UI'}]]*/  'Segoe UI', sans-serif;
         }
     </style>
     <link rel="stylesheet" th:href="@{/css/style.css}"/>
