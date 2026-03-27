@@ -32,8 +32,10 @@
             → Blok ini hanya tampil jika user SUDAH login
         -->
         <div sec:authorize="isAuthenticated()" class="user-info">
-            <img th:src="${userPicture}" alt="foto profil" class="avatar"
-                 onerror="this.src='/images/default-avatar.png'"/>
+            <img th:if="${userPicture != null}" th:src="${userPicture}"
+                 alt="foto profil" class="avatar"/>
+            <div th:unless="${userPicture != null}" class="avatar-initial"
+                 th:text="${userName != null ? #strings.substring(userName,0,1) : '?'}">?</div>
             <span th:text="${userName}">Nama User</span>
 
             <!--

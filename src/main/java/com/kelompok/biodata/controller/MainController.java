@@ -23,6 +23,7 @@ public class MainController {
         ThemeSetting theme = themeRepo.findById(1L)
                 .orElse(new ThemeSetting());
         model.addAttribute("theme", theme);
+        model.addAttribute("isLoggedIn", principal != null);
 
         if (principal != null) {
             model.addAttribute("userName",  principal.getAttribute("name"));
