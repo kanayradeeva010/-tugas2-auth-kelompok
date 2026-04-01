@@ -47,7 +47,7 @@ public class MainController {
         return "profile";
     }
 
-    @GetMapping("/login-error")
+    @GetMapping("/loginn-error")
     public String loginError(Model model) {
         model.addAttribute("loginError", true);
         return "index";
