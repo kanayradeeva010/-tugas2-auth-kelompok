@@ -3,33 +3,276 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8"/>
-    <title>Profil</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Profil — PKPassword123!</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet"/>
+
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: #F8FAFC;
+            color: #0F172A;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ── NAVBAR ── */
+        .navbar {
+            position: sticky; top: 0; z-index: 100;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 2rem; height: 64px;
+            background: rgba(255,255,255,0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+        }
+        .nav-brand a {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1rem; color: #1D4ED8; text-decoration: none;
+            display: flex; align-items: center; gap: 0.4rem;
+        }
+        .nav-brand a:hover { opacity: 0.75; }
+        .btn {
+            display: inline-flex; align-items: center; gap: 0.4rem;
+            padding: 0.45rem 1rem; border-radius: 8px;
+            font-size: 0.84rem; font-weight: 500; font-family: 'DM Sans', sans-serif;
+            cursor: pointer; transition: all 0.18s ease; text-decoration: none; border: none;
+        }
+        .btn-outline {
+            background: transparent; color: #0F172A;
+            border: 1.5px solid rgba(0,0,0,0.2);
+        }
+        .btn-outline:hover { border-color: #1D4ED8; color: #1D4ED8; }
+
+        /* ── PROFILE CARD ── */
+        .profile-wrap {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: calc(100vh - 64px);
+            padding: 3rem 1.5rem;
+        }
+
+        .profile-card {
+            background: #fff;
+            border: 1px solid rgba(0,0,0,0.08);
+            border-radius: 24px;
+            padding: 3rem 2.5rem;
+            max-width: 420px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 4px 40px rgba(0,0,0,0.06);
+            animation: fadeUp 0.45s ease both;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .profile-pic-wrapper {
+            position: relative;
+            width: 96px;
+            margin: 0 auto 1.5rem;
+        }
+
+        .profile-pic {
+            width: 96px; height: 96px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #1D4ED8;
+            display: block;
+        }
+
+        .profile-status {
+            position: absolute;
+            bottom: 2px; right: 2px;
+            width: 18px; height: 18px;
+            border-radius: 50%;
+            background: #22C55E;
+            border: 2.5px solid #fff;
+        }
+
+        .profile-name {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.6rem;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.3rem;
+        }
+
+        .profile-email {
+            font-size: 0.88rem;
+            color: #64748B;
+            margin-bottom: 1.5rem;
+        }
+
+        .divider {
+            height: 1px;
+            background: rgba(0,0,0,0.07);
+            margin: 1.5rem 0;
+        }
+
+        .role-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.5rem 1.2rem;
+            border-radius: 999px;
+            font-size: 0.84rem;
+            font-weight: 500;
+        }
+        .role-badge.member {
+            background: #F0FDF4; color: #15803D;
+            border: 1px solid #BBF7D0;
+        }
+        .role-badge.user {
+            background: #EFF6FF; color: #1D4ED8;
+            border: 1px solid #BFDBFE;
+        }
+
+        .role-explanation {
+            margin-top: 0.9rem;
+            font-size: 0.82rem;
+            color: #94A3B8;
+            line-height: 1.5;
+        }
+
+        .profile-info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+            text-align: left;
+        }
+
+        .info-item {
+            background: #F8FAFC;
+            border-radius: 10px;
+            padding: 0.75rem 1rem;
+        }
+
+        .info-label {
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #94A3B8;
+            margin-bottom: 0.2rem;
+        }
+
+        .info-value {
+            font-size: 0.88rem;
+            font-weight: 500;
+            color: #0F172A;
+            word-break: break-all;
+        }
+
+        .action-row {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 1.75rem;
+        }
+
+        .btn-primary {
+            background: #1D4ED8; color: #fff;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.18);
+            flex: 1; justify-content: center;
+        }
+        .btn-primary:hover { filter: brightness(1.1); transform: translateY(-1px); }
+
+        .btn-outline-full {
+            background: transparent; color: #0F172A;
+            border: 1.5px solid rgba(0,0,0,0.15);
+            flex: 1; justify-content: center;
+        }
+        .btn-outline-full:hover { border-color: #1D4ED8; color: #1D4ED8; }
+    </style>
 </head>
 <body>
+
 <nav class="navbar">
     <div class="nav-brand">
-        <a th:href="@{/}" style="color:inherit;text-decoration:none;">← Kembali</a>
+        <a th:href="@{/}">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/>
+            </svg>
+            Kembali ke Beranda
+        </a>
     </div>
-    <div class="nav-actions">
+    <div>
         <form th:action="@{/logout}" method="post" style="display:inline;">
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-            <button type="submit" class="btn btn-outline">Logout</button>
+            <button type="submit" class="btn btn-outline">Keluar</button>
         </form>
     </div>
 </nav>
 
-<main class="container" style="max-width:480px;margin-top:3rem;text-align:center;">
-    <img th:src="${userPicture}" alt="foto" style="width:96px;height:96px;border-radius:50%;margin-bottom:1rem;"/>
-    <h1 th:text="${userName}" style="margin-bottom:0.25rem;"></h1>
-    <p th:text="${userEmail}" style="opacity:0.6;margin-bottom:1.5rem;"></p>
+<div class="profile-wrap">
+    <div class="profile-card">
 
-    <div sec:authorize="hasRole('MEMBER')" class="role-badge member" style="margin-bottom:1rem;">
-        ✓ Anggota Kelompok
+        <div class="profile-pic-wrapper">
+            <img th:src="${userPicture}" alt="Foto profil" class="profile-pic"/>
+            <div class="profile-status"></div>
+        </div>
+
+        <h1 class="profile-name" th:text="${userName}">Nama User</h1>
+        <p class="profile-email" th:text="${userEmail}">email@example.com</p>
+
+        <div sec:authorize="hasRole('MEMBER')" class="role-badge member">
+            ✓ Anggota Kelompok
+        </div>
+        <div sec:authorize="!hasRole('MEMBER')" class="role-badge user">
+            👤 Tamu Terautentikasi
+        </div>
+
+        <p sec:authorize="hasRole('MEMBER')" class="role-explanation">
+            Kamu punya akses penuh — termasuk mengubah tampilan website.
+        </p>
+        <p sec:authorize="!hasRole('MEMBER')" class="role-explanation">
+            Kamu sudah login, tapi tidak terdaftar sebagai anggota kelompok.
+        </p>
+
+        <div class="divider"></div>
+
+        <div class="profile-info-grid">
+            <div class="info-item">
+                <div class="info-label">Nama</div>
+                <div class="info-value" th:text="${userName}">—</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Email</div>
+                <div class="info-value" th:text="${userEmail}">—</div>
+            </div>
+            <div class="info-item" sec:authorize="hasRole('MEMBER')">
+                <div class="info-label">Role</div>
+                <div class="info-value" style="color:#15803D;">MEMBER</div>
+            </div>
+            <div class="info-item" sec:authorize="!hasRole('MEMBER')">
+                <div class="info-label">Role</div>
+                <div class="info-value" style="color:#1D4ED8;">USER</div>
+            </div>
+            <div class="info-item" sec:authorize="hasRole('MEMBER')">
+                <div class="info-label">Akses</div>
+                <div class="info-value">Tampilan ✓</div>
+            </div>
+            <div class="info-item" sec:authorize="!hasRole('MEMBER')">
+                <div class="info-label">Akses</div>
+                <div class="info-value" style="color:#94A3B8;">Read-only</div>
+            </div>
+        </div>
+
+        <div class="action-row">
+            <a th:href="@{/}" class="btn btn-outline-full">Beranda</a>
+            <a sec:authorize="hasRole('MEMBER')" th:href="@{/theme/settings}" class="btn btn-primary">⚙ Atur Tampilan</a>
+            <form sec:authorize="!hasRole('MEMBER')" th:action="@{/logout}" method="post" style="flex:1">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">Keluar</button>
+            </form>
+        </div>
+
     </div>
-    <div sec:authorize="!hasRole('MEMBER')" class="role-badge user" style="margin-bottom:1rem;">
-        Tamu Terautentikasi
-    </div>
-</main>
+</div>
+
 </body>
 </html>

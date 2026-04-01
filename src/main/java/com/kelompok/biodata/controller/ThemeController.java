@@ -52,7 +52,7 @@ public class ThemeController {
 
         redirectAttrs.addFlashAttribute("successMessage",
                 "Tampilan berhasil diperbarui!");
-        return "redirect:/theme/settings";
+        return "redirect:/";
     }
 
     @PostMapping("/reset")
