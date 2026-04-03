@@ -39,6 +39,9 @@ public class MainController {
             @AuthenticationPrincipal OAuth2User principal,
             Model model
     ) {
+        ThemeSetting theme = themeRepo.findById(1L)
+                .orElse(new ThemeSetting());
+        model.addAttribute("theme", theme);
         model.addAttribute("userName",    principal.getAttribute("name"));
         model.addAttribute("userEmail",   principal.getAttribute("email"));
         model.addAttribute("userPicture", principal.getAttribute("picture"));
