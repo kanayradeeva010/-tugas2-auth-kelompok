@@ -6,8 +6,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class BiodataApplicationTests {
 
-	@Test
-	void contextLoads() {
-	}
+    @Test
+    void contextLoads() {
+    }
 
+    @Test
+    public void testMain() {
+        BiodataApplication.main(new String[] {});
+    }
 }
