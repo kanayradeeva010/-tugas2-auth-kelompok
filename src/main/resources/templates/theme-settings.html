@@ -41,7 +41,7 @@
             gap: 1rem;
         }
         .nav-brand a {
-            font-family: 'DM Serif Display', serif;
+            font-family: var(--font);
             font-size: 0.95rem; color: var(--primary); text-decoration: none;
             display: flex; align-items: center; gap: 0.4rem;
         }
@@ -120,7 +120,7 @@
         }
 
         .panel-title {
-            font-family: 'DM Serif Display', serif;
+            font-family: var(--font);
             font-size: 1.5rem;
             letter-spacing: -0.02em;
             margin-bottom: 0.3rem;
@@ -256,7 +256,7 @@
         }
 
         .prev-heading {
-            font-family: 'DM Serif Display', serif;
+            font-family: var(--font);
             font-size: 1.15rem;
             color: var(--text);
             margin-bottom: 0.5rem;
@@ -349,7 +349,7 @@
         }
     </style>
 </head>
-<body>
+<body th:style="|--primary: ${theme.primaryColor}; --bg: ${theme.backgroundColor}; --text: ${theme.textColor}; --font: ${theme.fontFamily};|">
 
 <nav class="navbar">
     <div class="nav-brand">
@@ -428,24 +428,29 @@
 
                 <div class="form-group">
                     <label class="form-label" for="fontFamily">Tipografi</label>
-                    <select id="fontFamily" name="fontFamily" class="select-input" onchange="updatePreviewFont(this.value)">
+                    <select id="fontFamily" name="fontFamily" class="select-input" onchange="updatePreviewFont(this.value)" style="font-family: var(--font);">
                         <option value="'Segoe UI', sans-serif"
+                                style="font-family: 'Segoe UI', sans-serif;"
                                 th:selected="${theme.fontFamily == '''Segoe UI'', sans-serif'}">
                             Segoe UI — Default
                         </option>
                         <option value="'Georgia', serif"
+                                style="font-family: 'Georgia', serif;"
                                 th:selected="${theme.fontFamily == '''Georgia'', serif'}">
                             Georgia — Serif
                         </option>
                         <option value="'Courier New', monospace"
+                                style="font-family: 'Courier New', monospace;"
                                 th:selected="${theme.fontFamily == '''Courier New'', monospace'}">
                             Courier New — Monospace
                         </option>
                         <option value="'Arial', sans-serif"
+                                style="font-family: 'Arial', sans-serif;"
                                 th:selected="${theme.fontFamily == '''Arial'', sans-serif'}">
                             Arial — Sans-serif
                         </option>
                         <option value="'Trebuchet MS', sans-serif"
+                                style="font-family: 'Trebuchet MS', sans-serif;"
                                 th:selected="${theme.fontFamily == '''Trebuchet MS'', sans-serif'}">
                             Trebuchet MS — Humanist
                         </option>
