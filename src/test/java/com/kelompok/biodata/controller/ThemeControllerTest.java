@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -57,19 +58,24 @@ public class ThemeControllerTest {
     public void testUpdateTheme_Success() throws Exception {
         ThemeSetting existingTheme = new ThemeSetting();
         when(themeRepo.findById(1L)).thenReturn(Optional.of(existingTheme));
+        when(themeRepo.save(any(ThemeSetting.class))).thenReturn(existingTheme);
+
+        clearInvocations(themeRepo);
 
         mockMvc.perform(post("/theme/update")
-                .param("primaryColor", "#FF0000")
-                .param("backgroundColor", "#FFFFFF")
-                .param("fontFamily", "Arial")
-                .param("textColor", "#000000")
-                .with(csrf()) // Wajib karena ini request POST
-                .with(oauth2Login().authorities(() -> "ROLE_MEMBER")))
+                        .param("primaryColor", "#FF0000")
+                        .param("backgroundColor", "#FFFFFF")
+                        .param("fontFamily", "Arial")
+                        .param("textColor", "#000000")
+                        .with(csrf())
+                        .with(oauth2Login().authorities(
+                                new SimpleGrantedAuthority("ROLE_MEMBER"),
+                                new SimpleGrantedAuthority("ROLE_USER")
+                        )))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/"))
                 .andExpect(flash().attributeExists("successMessage"));
 
-        // Verifikasi repository memanggil save 1x
         verify(themeRepo, times(1)).save(any(ThemeSetting.class));
     }
 
