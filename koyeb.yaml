@@ -1,0 +1,18 @@
+name: biodata-kelompok
+
+services:
+  - name: web
+    type: web
+    instance_type: free
+    regions:
+      - sin
+    git:
+      branch: main
+      build_command: mvn clean package -DskipTests
+      run_command: java -Dspring.profiles.active=prod -Dserver.port=$PORT -jar target/biodata-0.0.1-SNAPSHOT.jar
+    ports:
+      - port: 8080
+        protocol: http
+    health_checks:
+      - path: /
+        port: 8080
