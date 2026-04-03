@@ -9,15 +9,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet"/>
 
-    <style th:inline="text">
-        :root {
-            --primary:   [[${theme != null ? theme.primaryColor    : '#1D4ED8'}]];
-            --bg:        [[${theme != null ? theme.backgroundColor : '#F8FAFC'}]];
-            --text:      [[${theme != null ? theme.textColor       : '#0F172A'}]];
-            --font:      [[${theme != null ? theme.fontFamily      : "'DM Sans', sans-serif"}]];
-        }
-    </style>
-
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -50,7 +41,7 @@
         }
 
         .nav-brand {
-            font-family: 'DM Serif Display', serif;
+            font-family: var(--font);
             font-size: 1.15rem;
             letter-spacing: -0.02em;
             color: var(--primary);
@@ -294,7 +285,7 @@
         }
 
         .hero h1 {
-            font-family: 'DM Serif Display', serif;
+            font-family: var(--font);
             font-size: clamp(2.4rem, 5vw, 3.8rem);
             line-height: 1.1;
             letter-spacing: -0.03em;
@@ -362,7 +353,7 @@
         }
 
         .section-header h2 {
-            font-family: 'DM Serif Display', serif;
+            font-family: var(--font);
             font-size: 1.6rem;
             letter-spacing: -0.02em;
         }
@@ -419,7 +410,7 @@
             color: #fff;
             font-size: 1.15rem;
             font-weight: 700;
-            font-family: 'DM Serif Display', serif;
+            font-family: var(--font);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -504,7 +495,7 @@
         }
     </style>
 </head>
-<body>
+<body th:style="|--primary: ${theme != null ? theme.primaryColor : '#1D4ED8'}; --bg: ${theme != null ? theme.backgroundColor : '#F8FAFC'}; --text: ${theme != null ? theme.textColor : '#0F172A'}; --font: ${theme != null ? theme.fontFamily : '''DM Sans'', sans-serif'};|">
 
 <!-- ===== NAVBAR ===== -->
 <nav class="navbar">
@@ -613,7 +604,7 @@
             <div class="member-avatar-circle">KM</div>
             <h3>Kanayra Maritza Sanika Adeeva</h3>
             <p class="npm">2406437880</p>
-            <p class="role-desc">Project Lead &amp; Backend Developer</p>
+            <p class="role-desc">Project Lead + Backend</p>
             <p class="domisili">Jakarta</p>
         </div>
 
@@ -621,7 +612,7 @@
             <div class="member-avatar-circle">ZN</div>
             <h3>Zita Nayra Ardini</h3>
             <p class="npm">2406404913</p>
-            <p class="role-desc">OAuth &amp; Security Engineer</p>
+            <p class="role-desc">OAuth & Security</p>
             <p class="domisili">Depok</p>
         </div>
 
@@ -637,7 +628,7 @@
             <div class="member-avatar-circle">AN</div>
             <h3>Abigail Namaratonggi Pasaribu</h3>
             <p class="npm">2406495773</p>
-            <p class="role-desc">Testing &amp; Integration</p>
+            <p class="role-desc">Testing & Laporan</p>
             <p class="domisili">Bogor</p>
         </div>
 
@@ -645,7 +636,7 @@
             <div class="member-avatar-circle">TF</div>
             <h3>Tsaniya Fini Ardiyanti</h3>
             <p class="npm">2406437893</p>
-            <p class="role-desc">DevOps &amp; Presenter</p>
+            <p class="role-desc">DevOps + Presenter</p>
             <p class="domisili">Bekasi</p>
         </div>
 

@@ -11,10 +11,11 @@
 
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
         body {
-            font-family: 'DM Sans', sans-serif;
-            background: #F8FAFC;
-            color: #0F172A;
+            font-family: var(--font);
+            background: var(--bg);
+            color: var(--text);
             min-height: 100vh;
             -webkit-font-smoothing: antialiased;
         }
@@ -28,23 +29,30 @@
             backdrop-filter: blur(12px);
             border-bottom: 1px solid rgba(0,0,0,0.08);
         }
+
         .nav-brand a {
-            font-family: 'DM Serif Display', serif;
-            font-size: 1rem; color: #1D4ED8; text-decoration: none;
+            font-family: var(--font);
+            font-size: 1rem;
+            color: var(--primary);
+            text-decoration: none;
             display: flex; align-items: center; gap: 0.4rem;
         }
         .nav-brand a:hover { opacity: 0.75; }
+
         .btn {
             display: inline-flex; align-items: center; gap: 0.4rem;
             padding: 0.45rem 1rem; border-radius: 8px;
-            font-size: 0.84rem; font-weight: 500; font-family: 'DM Sans', sans-serif;
-            cursor: pointer; transition: all 0.18s ease; text-decoration: none; border: none;
+            font-size: 0.84rem; font-weight: 500;
+            font-family: var(--font);
+            cursor: pointer; transition: all 0.18s ease;
+            text-decoration: none; border: none;
         }
         .btn-outline {
-            background: transparent; color: #0F172A;
+            background: transparent;
+            color: var(--text);
             border: 1.5px solid rgba(0,0,0,0.2);
         }
-        .btn-outline:hover { border-color: #1D4ED8; color: #1D4ED8; }
+        .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
 
         /* ── PROFILE CARD ── */
         .profile-wrap {
@@ -82,7 +90,7 @@
             width: 96px; height: 96px;
             border-radius: 50%;
             object-fit: cover;
-            border: 3px solid #1D4ED8;
+            border: 3px solid var(--primary);
             display: block;
         }
 
@@ -96,9 +104,10 @@
         }
 
         .profile-name {
-            font-family: 'DM Serif Display', serif;
+            font-family: var(--font);
             font-size: 1.6rem;
             letter-spacing: -0.02em;
+            color: var(--text);
             margin-bottom: 0.3rem;
         }
 
@@ -147,7 +156,7 @@
         }
 
         .info-item {
-            background: #F8FAFC;
+            background: color-mix(in srgb, var(--bg) 60%, #fff);
             border-radius: 10px;
             padding: 0.75rem 1rem;
         }
@@ -164,7 +173,7 @@
         .info-value {
             font-size: 0.88rem;
             font-weight: 500;
-            color: #0F172A;
+            color: var(--text);
             word-break: break-all;
         }
 
@@ -175,21 +184,25 @@
         }
 
         .btn-primary {
-            background: #1D4ED8; color: #fff;
+            background: var(--primary);
+            color: #fff;
             box-shadow: 0 1px 3px rgba(0,0,0,0.18);
-            flex: 1; justify-content: center;
+            flex: 1;
+            justify-content: center;
         }
         .btn-primary:hover { filter: brightness(1.1); transform: translateY(-1px); }
 
         .btn-outline-full {
-            background: transparent; color: #0F172A;
+            background: transparent;
+            color: var(--text);
             border: 1.5px solid rgba(0,0,0,0.15);
-            flex: 1; justify-content: center;
+            flex: 1;
+            justify-content: center;
         }
-        .btn-outline-full:hover { border-color: #1D4ED8; color: #1D4ED8; }
+        .btn-outline-full:hover { border-color: var(--primary); color: var(--primary); }
     </style>
 </head>
-<body>
+<body th:style="|--primary: ${theme != null ? theme.primaryColor : '#1D4ED8'}; --bg: ${theme != null ? theme.backgroundColor : '#F8FAFC'}; --text: ${theme != null ? theme.textColor : '#0F172A'}; --font: ${theme != null ? theme.fontFamily : '''DM Sans'', sans-serif'};|">
 
 <nav class="navbar">
     <div class="nav-brand">
@@ -212,7 +225,7 @@
     <div class="profile-card">
 
         <div class="profile-pic-wrapper">
-            <img th:src="${userPicture}" alt="Foto profil" class="profile-pic"/>
+            <img th:src="${userPicture}" alt="Foto profil" class="profile-pic" referrerpolicy="no-referrer"/>
             <div class="profile-status"></div>
         </div>
 
@@ -220,14 +233,14 @@
         <p class="profile-email" th:text="${userEmail}">email@example.com</p>
 
         <div sec:authorize="hasRole('MEMBER')" class="role-badge member">
-            ✓ Anggota Kelompok
+            &#10003; Anggota Kelompok
         </div>
         <div sec:authorize="!hasRole('MEMBER')" class="role-badge user">
-            👤 Tamu Terautentikasi
+            &#128100; Tamu Terautentikasi
         </div>
 
         <p sec:authorize="hasRole('MEMBER')" class="role-explanation">
-            Kamu punya akses penuh — termasuk mengubah tampilan website.
+            Kamu punya akses penuh &mdash; termasuk mengubah tampilan website.
         </p>
         <p sec:authorize="!hasRole('MEMBER')" class="role-explanation">
             Kamu sudah login, tapi tidak terdaftar sebagai anggota kelompok.
@@ -250,11 +263,11 @@
             </div>
             <div class="info-item" sec:authorize="!hasRole('MEMBER')">
                 <div class="info-label">Role</div>
-                <div class="info-value" style="color:#1D4ED8;">USER</div>
+                <div class="info-value" style="color:var(--primary);">USER</div>
             </div>
             <div class="info-item" sec:authorize="hasRole('MEMBER')">
                 <div class="info-label">Akses</div>
-                <div class="info-value">Tampilan ✓</div>
+                <div class="info-value">Tampilan &#10003;</div>
             </div>
             <div class="info-item" sec:authorize="!hasRole('MEMBER')">
                 <div class="info-label">Akses</div>
@@ -264,8 +277,8 @@
 
         <div class="action-row">
             <a th:href="@{/}" class="btn btn-outline-full">Beranda</a>
-            <a sec:authorize="hasRole('MEMBER')" th:href="@{/theme/settings}" class="btn btn-primary">⚙ Atur Tampilan</a>
-            <form sec:authorize="!hasRole('MEMBER')" th:action="@{/logout}" method="post" style="flex:1">
+            <a sec:authorize="hasRole('MEMBER')" th:href="@{/theme/settings}" class="btn btn-primary">&#9881; Atur Tampilan</a>
+            <form sec:authorize="!hasRole('MEMBER')" th:action="@{/logout}" method="post" style="flex:1;">
                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
                 <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">Keluar</button>
             </form>
